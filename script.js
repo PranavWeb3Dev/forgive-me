@@ -267,9 +267,7 @@
     { id: 'rassa', name: 'Tambda Pandhra Rassa', emoji: '🍲' },
     { id: 'icecream', name: 'Ice Cream', emoji: '🍨' },
     { id: 'pizza', name: 'Pizza', emoji: '🍕' },
-    { id: 'momos', name: 'Momos', emoji: '🥟' },
     { id: 'brownie', name: 'Chocolate Brownie', emoji: '🍫' },
-    { id: 'mangoshake', name: 'Mango Shake', emoji: '🥭' },
   ];
 
   function renderFoodGrid() {
