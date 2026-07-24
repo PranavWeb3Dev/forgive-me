@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Sorry Acceptance Form 🥺❤️</title>
+    <meta
+      name="description"
+      content="An official, extremely important, legally non-binding Sorry Acceptance Form."
+    />
+
+    <!-- Google Fonts: Poppins (display), Outfit (body/UI), Nunito (handwritten accents) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito:ital,wght@0,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- EmailJS SDK (client-side email sending, no backend needed) -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  </head>
+  <body>
+    <!-- Ambient background layer: floating hearts + soft blobs live here -->
+    <div class="ambient-bg" aria-hidden="true">
+      <div class="blob blob-a"></div>
+      <div class="blob blob-b"></div>
+      <div class="blob blob-c"></div>
+      <div id="floatingHearts" class="floating-hearts"></div>
+    </div>
+
+    <!-- Top case-file bar: the "signature" motif — this whole app is styled as a
+       goofy official case file being processed, stamped, and closed. -->
+    <header class="case-bar" role="banner">
+      <div class="case-bar__left">
+        <span class="case-icon">🗂️</span>
+        <div class="case-text">
+          <span class="case-title">Case File No. 001</span>
+          <span class="case-subtitle"
+            >The People vs. A Little Bit of Attitude</span
+          >
+        </div>
+      </div>
+      <div class="case-bar__right">
+        <span id="caseStatus" class="case-status case-status--open"
+          >STATUS: UNDER INVESTIGATION</span
+        >
+      </div>
+    </header>
+
+    <main id="app" class="app">
+      <!-- Progress dots -->
+      <nav class="progress-track" aria-label="Progress">
+        <ol id="progressTrack" class="progress-track__list">
+          <li class="progress-dot" data-step="landing"></li>
+          <li class="progress-dot" data-step="mood"></li>
+          <li class="progress-dot" data-step="food"></li>
+          <li class="progress-dot" data-step="schedule"></li>
+          <li class="progress-dot" data-step="confirm"></li>
+        </ol>
+      </nav>
+
+      <!-- ============================================================
+         SCREEN 0 — LANDING
+    ============================================================= -->
+      <section
+        class="screen screen--active"
+        id="screen-landing"
+        data-screen="landing"
+        aria-labelledby="landing-heading"
+      >
+        <div class="glass-card glass-card--hero">
+          <span class="stamp stamp--pending" aria-hidden="true"
+            >EVIDENCE #1</span
+          >
+          <div class="hero-heart" aria-hidden="true">
+            <span class="hero-heart__emoji">❤️</span>
+          </div>
+          <h1 id="landing-heading" class="display-heading">
+            Ek Choti Si Request <span aria-hidden="true">🥺❤️</span>
+          </h1>
+          <p class="subtitle">
+            Ek official, thoda dramatic, bohot zaroori form hai.<br />Sirf 2
+            minute lagenge, promise. 🤞
+          </p>
+          <button
+            type="button"
+            class="btn btn--primary btn--glow"
+            id="startBtn"
+          >
+            <span>Start the Investigation</span>
+            <span class="btn__icon" aria-hidden="true">🔍</span>
+          </button>
+          <p class="hero-footnote">
+            Filed by: Pranav &nbsp;•&nbsp; Jurisdiction: Best Friend's Heart
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SCREEN 1 — MOOD (the impossible NO button)
+    ============================================================= -->
+      <section
+        class="screen"
+        id="screen-mood"
+        data-screen="mood"
+        aria-labelledby="mood-heading"
+      >
+        <div class="glass-card">
+          <span class="stamp stamp--pending" aria-hidden="true">EXHIBIT A</span>
+          <p class="eyebrow">Step 1 of 4 — Statement of Feelings</p>
+          <h2 id="mood-heading" class="section-heading">
+            Kya tum abhi bhi mujhse gussa ho? <span aria-hidden="true">😭</span>
+          </h2>
+          <p class="subtitle subtitle--tight">
+            Sach sach batana. Court is watching. 👀
+          </p>
+
+          <div class="mood-buttons" id="moodButtons">
+            <button
+              type="button"
+              class="btn btn--danger"
+              id="yesBtn"
+              aria-label="Yes, I am still angry"
+            >
+              YES <span aria-hidden="true">😡</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn--ghost btn--dodge"
+              id="noBtn"
+              aria-label="No, I am not angry (this button will not cooperate)"
+            >
+              NO <span aria-hidden="true">🙂</span>
+            </button>
+          </div>
+
+          <p class="hint-text" id="dodgeCounter" aria-live="polite"></p>
+        </div>
+
+        <!-- Toast lives fixed to viewport so it works even after NO button teleports -->
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ============================================================
+         SCREEN 2 — FOOD
+    ============================================================= -->
+      <section
+        class="screen"
+        id="screen-food"
+        data-screen="food"
+        aria-labelledby="food-heading"
+      >
+        <div class="glass-card glass-card--wide">
+          <span class="stamp stamp--pending" aria-hidden="true">EXHIBIT B</span>
+          <p class="eyebrow">Step 2 of 4 — Compensation Menu</p>
+          <h2 id="food-heading" class="section-heading">
+            Chalo ab batao treat mein kya khana hai?
+            <span aria-hidden="true">🍽️</span>
+          </h2>
+          <p class="subtitle subtitle--tight">
+            Ek cheez chuno. Sirf ek. (Theek hai fine, dil badi hai, ek hi lena.
+            😌)
+          </p>
+
+          <div
+            class="food-grid"
+            id="foodGrid"
+            role="listbox"
+            aria-label="Choose a food"
+          ></div>
+
+          <p class="field-error" id="foodError" role="alert" hidden>
+            Pehle kuch toh chuno, bhookha nahi rakhungi... *rakhunga* khud ko.
+            🥲
+          </p>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn--text" data-back="mood">
+              ← Back
+            </button>
+            <button type="button" class="btn btn--primary" id="foodNextBtn">
+              Continue →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SCREEN 3 — SCHEDULE
+    ============================================================= -->
+      <section
+        class="screen"
+        id="screen-schedule"
+        data-screen="schedule"
+        aria-labelledby="schedule-heading"
+      >
+        <div class="glass-card glass-card--wide">
+          <span class="stamp stamp--pending" aria-hidden="true">EXHIBIT C</span>
+          <p class="eyebrow">Step 3 of 4 — Hearing Date</p>
+          <h2 id="schedule-heading" class="section-heading">
+            Ab Madam ji kab free hain? <span aria-hidden="true">📅</span>
+          </h2>
+          <p class="subtitle subtitle--tight">
+            Ek date aur time chuno — court adjourned nahi hogi otherwise. ⚖️
+          </p>
+
+          <div class="schedule-grid">
+            <div class="field-block">
+              <label class="field-label" for="dateInput">Date</label>
+              <input
+                type="date"
+                id="dateInput"
+                class="field-input"
+                aria-describedby="dateHelp"
+              />
+              <p class="field-help" id="dateHelp">
+                Weekdays 9 AM–7 PM aur weekends 2 PM–7 PM thodi busy rehte hain
+                😌
+              </p>
+            </div>
+
+            <div class="field-block">
+              <label class="field-label" for="timeSelect"
+                >Available slots</label
+              >
+              <select
+                id="timeSelect"
+                class="field-input"
+                disabled
+                aria-describedby="timeHelp"
+              >
+                <option value="">Pehle date chuno</option>
+              </select>
+              <p class="field-help" id="timeHelp"></p>
+            </div>
+          </div>
+
+          <p class="field-error" id="scheduleError" role="alert" hidden>
+            Date aur time dono chahiye, warna judge saahab naraaz ho jayenge. 👨‍⚖️
+          </p>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn--text" data-back="food">
+              ← Back
+            </button>
+            <button type="button" class="btn btn--primary" id="scheduleNextBtn">
+              Continue →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SCREEN 4 — CONFIRM
+    ============================================================= -->
+      <section
+        class="screen"
+        id="screen-confirm"
+        data-screen="confirm"
+        aria-labelledby="confirm-heading"
+      >
+        <div class="glass-card">
+          <span class="stamp stamp--pending" aria-hidden="true"
+            >FINAL EXHIBIT</span
+          >
+          <p class="eyebrow">Step 4 of 4 — Final Confirmation</p>
+          <h2 id="confirm-heading" class="section-heading">
+            Final Confirmation <span aria-hidden="true">❤️</span>
+          </h2>
+
+          <dl class="summary-list" id="summaryList">
+            <div class="summary-row">
+              <dt>Mood</dt>
+              <dd id="summaryMood">—</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Food</dt>
+              <dd id="summaryFood">—</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Date</dt>
+              <dd id="summaryDate">—</dd>
+            </div>
+            <div class="summary-row">
+              <dt>Time</dt>
+              <dd id="summaryTime">—</dd>
+            </div>
+          </dl>
+
+          <p class="field-error" id="submitError" role="alert" hidden></p>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn--text" data-back="schedule">
+              ← Back
+            </button>
+            <button
+              type="button"
+              class="btn btn--primary btn--glow"
+              id="acceptBtn"
+            >
+              <span id="acceptBtnLabel">Accept My Sorry</span>
+              <span aria-hidden="true">❤️</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SCREEN 5 — SUCCESS
+    ============================================================= -->
+      <section
+        class="screen"
+        id="screen-success"
+        data-screen="success"
+        aria-labelledby="success-heading"
+      >
+        <div class="glass-card glass-card--celebrate">
+          <div class="success-emoji" aria-hidden="true">🎉</div>
+          <h1
+            id="success-heading"
+            class="display-heading display-heading--success"
+          >
+            Yayyyyy <span aria-hidden="true">❤️</span>
+          </h1>
+          <p class="success-subheading">
+            Thank You Madam Ji <span aria-hidden="true">🥹</span>
+          </p>
+
+          <ul class="promise-list">
+            <li>
+              <span aria-hidden="true">🚗❤️</span> Main tumhe ghar se pick
+              karunga
+            </li>
+            <li><span aria-hidden="true">😌</span> Treat meri taraf se</li>
+            <li>
+              <span aria-hidden="true">😭🤞</span> Aur is baar late nahi hounga
+            </li>
+          </ul>
+
+          <button
+            type="button"
+            class="btn btn--primary btn--glow"
+            id="seeYouBtn"
+          >
+            <span>See You Soon</span> <span aria-hidden="true">❤️</span>
+          </button>
+        </div>
+        <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+      </section>
+    </main>
+
+    <!-- Tiny audio blips, muted by default, only ever play after a user gesture -->
+    <audio
+      id="sfxClick"
+      preload="auto"
+      src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
+      aria-hidden="true"
+    ></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
