@@ -17,9 +17,9 @@
      4. Go to Account > General -> copy your Public Key
      5. Paste all three values below.
   ------------------------------------------------------------------- */
-  const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
-  const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+  const EMAILJS_PUBLIC_KEY = 'Uzx6r-oPJdouTvBCu';
+  const EMAILJS_SERVICE_ID = 'service_2g85p4r';
+  const EMAILJS_TEMPLATE_ID = 'template_agy4ll1';
 
   // Destination email is also set inside your EmailJS template's "To Email"
   // field on the EmailJS dashboard — set it to: pranavsy149@gmail.com
